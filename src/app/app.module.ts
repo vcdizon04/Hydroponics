@@ -10,11 +10,13 @@ import { AppProvider } from '../providers/app/app';
 import { HttpClientModule } from '@angular/common/http';
 
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { TablePage } from '../pages/table/table';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    TablePage
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
   entryComponents: [
     MyApp,
     HomePage,
+    TablePage
   ],
   providers: [
     StatusBar,

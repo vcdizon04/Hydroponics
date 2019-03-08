@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { AppProvider } from '../../providers/app/app';
+import { TablePage } from '../table/table';
 
 @Component({
   selector: 'page-home',
@@ -10,10 +11,19 @@ export class HomePage {
   isWaterChecked: boolean;
   isLightChecked: boolean;
   sensorData: Array<any> = [];
+  latestSensorData: any;
+  latestId: Number;
+  temperature: String;
 
   constructor(public navCtrl: NavController, public appProvider: AppProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toast: ToastController) {
     this.init()
-    this.appProvider.getDataSensors().subscribe(res => this.sensorData = res)
+    this.appProvider.getDataSensors().subscribe(res => {
+      console.log(res);
+      this.sensorData = res;
+      this.latestSensorData = this.sensorData[this.sensorData.length -1];
+      this.latestId = this.latestSensorData.sensor_id;
+      console.log(this.latestSensorData)
+    })
   }
   init() {
     const loader = this.loadingCtrl.create({
@@ -74,5 +84,30 @@ export class HomePage {
     })
   }
   
+  updateLatesSensor() {
+    const loader = this.loadingCtrl.create({
+      content: "Updating please wait..."
+    });
+    loader.present();
+    this.appProvider.updateLatesSensor(this.temperature, this.latestId).subscribe(res => {
+      console.log(res)
+      this.appProvider.getDataSensors().subscribe(res => {
+        console.log(res);
+        this.sensorData = res;
+        this.latestSensorData = this.sensorData[this.sensorData.length -1];
+        this.latestId = this.latestSensorData.sensor_id;
+        console.log(this.latestSensorData)
+        loader.dismiss();
+      })
+    }, err => {
+      loader.dismiss();
+      alert("Error Updating try again..");
+    })
+    console.log(this.temperature , this.latestId)
+  }
+
+  gotoTable(){
+    this.navCtrl.push(TablePage, { data: this.sensorData});
+  }
 
 }

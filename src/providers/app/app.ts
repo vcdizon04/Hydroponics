@@ -16,6 +16,9 @@ export class AppProvider {
   updateStatus(type, status) {
     return this.http.get<any>('https://myhydroponics.000webhostapp.com/change_status.php', {params: {type: type, status: status }});
   }
+  updateLatesSensor(temperature, id) {
+    return this.http.get<any>('https://myhydroponics.000webhostapp.com/update_latest_sensor.php', {params: {temperature: temperature, id: id }});
+  }
   getWaterStatus() {
     return this.http.get<any>('https://myhydroponics.000webhostapp.com/water.php');
   }

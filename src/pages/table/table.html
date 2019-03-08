@@ -1,0 +1,45 @@
+<!--
+  Generated template for the TablePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Sensor Data</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="header" text-center >
+      <ion-col col-2   class="bordered" >
+         Light 
+      </ion-col>
+      <ion-col col-3  class="bordered"  >
+          Temperature 
+      </ion-col>
+      <ion-col col-2  class="bordered" >
+          Humidity 
+      </ion-col>
+      <ion-col col-2  class="bordered" >
+          Water 
+      </ion-col>
+      <ion-col col-3 class="bordered" >
+          Date
+      </ion-col>
+    </ion-row>
+    
+    <ion-row class="table-container">
+        <virtual-scroller #scroll [items]="sensorData">
+            <ion-row  *ngFor="let sensor of scroll.viewPortItems">
+              <ion-col col-2  class="bordered">{{sensor?.sensor_light}}</ion-col>
+              <ion-col col-3  class="bordered">{{sensor?.sensor_temp}}</ion-col>
+              <ion-col col-2  class="bordered">{{sensor?.sensor_humi}}</ion-col>
+              <ion-col col-2  class="bordered">{{sensor?.sensor_water}}</ion-col>
+              <ion-col col-3 class="bordered">{{sensor?.sensor_date}}</ion-col>
+            </ion-row>
+        </virtual-scroller>
+      </ion-row>
+  </ion-grid>
+</ion-content>
