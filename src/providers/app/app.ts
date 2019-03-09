@@ -28,4 +28,7 @@ export class AppProvider {
   getDataSensors(){
     return this.http.get<any>('https://myhydroponics.000webhostapp.com/sensors.php');
   }
+  signIn(user) {
+    return this.http.get<any>('https://myhydroponics.000webhostapp.com/login.php', { params: user });
+  }
 }

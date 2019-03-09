@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { AppProvider } from '../../providers/app/app';
 import { TablePage } from '../table/table';
+import { LogInPage } from '../log-in/log-in';
 
 @Component({
   selector: 'page-home',
@@ -37,7 +38,33 @@ export class HomePage {
     })
 
   }
-
+  updateTemperature() {
+    const loader = this.loadingCtrl.create({
+      content: 'Loading please wait..'
+    })
+    loader.present();
+    console.log(this.isLightChecked, this.isWaterChecked);
+    this.appProvider.updateStatus('temp', this.temperature).subscribe( res => {
+      console.log(res);
+      loader.dismiss();
+      this.toast.create( {
+        message: `Temparature successfully set to ${this.temperature}`,
+        duration: 2000
+      }).present();
+    },  err => {
+      loader.dismiss();
+      this.alertCtrl.create({
+        title: 'Error',
+        message: 'Please try again.',
+        buttons: [
+          {
+            text: 'Ok'
+          }
+        ]
+      }).present();
+      console.log(err);
+    })
+  }
   updateStatus(type, model) {
     const loader = this.loadingCtrl.create({
       content: 'Loading please wait..'
@@ -45,22 +72,6 @@ export class HomePage {
     loader.present();
     console.log(this.isLightChecked, this.isWaterChecked);
     const status = this[model] ? 1 : 0;
-    // const lightStatus = this.isLightChecked ? 1 : 0;
-
-    // this.appProvider.updateStatus('water', waterStatus).subscribe( res => {
-    //   console.log(res);
-    // }, err => {
-    //   // this.alertCtrl.create({
-    //   //   title: 'Error',
-    //   //   message: 'Please try again.',
-    //   //   buttons: [
-    //   //     {
-    //   //       text: 'Ok'
-    //   //     }
-    //   //   ]
-    //   // }).present();
-    //   console.log(err);
-    // })
     this.appProvider.updateStatus(type, status).subscribe( res => {
       console.log(res);
       loader.dismiss();
@@ -108,6 +119,25 @@ export class HomePage {
 
   gotoTable(){
     this.navCtrl.push(TablePage, { data: this.sensorData});
+  }
+
+  signOut() {
+   this.alertCtrl.create({
+     title: 'Log out',
+     message: 'Are you sure you want to log out?',
+     buttons: [
+       {
+         text: 'Ok',
+         handler: () => {
+          localStorage.clear();
+          this.navCtrl.setRoot(LogInPage);
+         }
+       },
+       {
+         text: 'Cancel'
+       }
+     ]
+   }).present();
   }
 
 }

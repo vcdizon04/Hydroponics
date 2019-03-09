@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-buttons left>
+        <button (click)="signOut()" ion-button  icon-only>
+            <ion-icon color="primary" name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
+    <ion-title text-center>
       My Hydroponics
     </ion-title>
     <ion-buttons right>
@@ -39,10 +44,13 @@
                 <ion-item>
                   <ion-label>Water: {{latestSensorData?.sensor_water}}</ion-label>
                 </ion-item>
+               
+              </ion-list>
+              <ion-list>
                 <ion-item>
                   <!-- <ion-label>Temperature</ion-label> -->
                   <ion-input [(ngModel)]="temperature" placeholder="Enter temperature" type="number"></ion-input> 
-                  <button (click)="updateLatesSensor()" ion-button item-right>Update</button>
+                  <button (click)="updateTemperature()" ion-button item-right>Update</button>
                 </ion-item>
               </ion-list>
         </ion-col>

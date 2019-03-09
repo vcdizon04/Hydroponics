@@ -4,16 +4,27 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { LogInPage } from '../pages/log-in/log-in';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+      console.log(isAuthenticated);
+
+      if(isAuthenticated) {
+        this.rootPage = HomePage;
+      } else {
+        this.rootPage = LogInPage;
+      }
+
       statusBar.styleDefault();
       splashScreen.hide();
     });

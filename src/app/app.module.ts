@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { TablePage } from '../pages/table/table';
+import { LogInPageModule } from '../pages/log-in/log-in.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TablePage } from '../pages/table/table';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+    LogInPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
